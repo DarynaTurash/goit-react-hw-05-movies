@@ -1,12 +1,13 @@
 import { fetchMovieDetails } from "fetches/fetchMovieDetails";
-import { useState, useEffect,  } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 export const MovieDetails = () => {
     const [movieDetails, setMovieDetails] = useState({});
-    const [caseNoInformation, setCaseNoInformation] = useState('false');
+    const [caseNoInformation, setCaseNoInformation] = useState(false);
     const { movieId } = useParams();
-
+    const navigate = useNavigate();
+    
 
     useEffect(() => {
         fetchMovieDetails(movieId)
@@ -20,17 +21,16 @@ export const MovieDetails = () => {
                 }
             })
             .catch(error => {
-                alert("An error occurred while fetching movie details: " + error.message);
+                console.log(error);
             });
     }, [movieId]);
-
-
 
     return (
         <main>
             <section>
                 {caseNoInformation ? <p>Sorry, we did not get any information about this film, try to choose another film, please</p> :
                 <div>
+                    <Link to="#" onClick={() => navigate(-1)}>Go back</Link>
                     <div>
                         <img src={`https://image.tmdb.org/t/p/original/${movieDetails.poster}`} alt={movieDetails.title} />
                     </div>

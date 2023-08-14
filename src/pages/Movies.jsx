@@ -1,14 +1,18 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { SearchQueryList } from "components/searchQueryList";
 import { fetchSearchQueryFilms } from "fetches/fetchSearchQueryFilms";
+import { SearchBox } from "components/SearchBox";
+
 
 export const Movies = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [foundedFilms, setFoundedFilms] = useState([]);
     const [status, setStatus] = useState('idle');
     const navigate = useNavigate();
-  
+    const [searchParams] = useSearchParams();
+    const queryParam = searchParams.get('movieName');
+    
 
     const handleSearch = event => {
         event.preventDefault();
@@ -23,7 +27,7 @@ export const Movies = () => {
             const dataFilms = await fetchSearchQueryFilms(searchQuery);
             setStatus('resolved');
             console.log(status);
-           
+            
             
             if (dataFilms.length === 0) {
                 alert("Sorry, there are no matches. Please check if the title you wrote is correct.");
@@ -41,18 +45,15 @@ export const Movies = () => {
         }
     };
 
+    useEffect(() => {
+        setSearchQuery(queryParam || "");
+    }, [queryParam]);
+
     return (
         <main>
-            <form>
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={event => setSearchQuery(event.target.value)}
-                />
-                <button type="submit" onClick={handleSearch}>Search</button>
-            </form>
+            <SearchBox query={searchQuery} onSearch={handleSearch} onChange={setSearchQuery} />
             {status === "pending" && <p>...Loadind</p>}
-            {status === "resolved" && <SearchQueryList list={foundedFilms} />}
+            {status === "resolved" && <SearchQueryList list={foundedFilms} query={searchQuery} />}
         </main>
     );
 };
