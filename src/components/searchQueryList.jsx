@@ -5,7 +5,7 @@ export const SearchQueryList = ({ list, query }) => {
     return (
         <div>
             <ul>
-                {list.map((film) => (<li key={film.id}><Link to={`/movies/${film.id}`} state={{ from: location, query}}>{film.original_title || film.name}</Link></li> ))}
+                {list.map((film) => (<li key={film.id}><Link to={`/movies/${film.id}`} state={{ from: location, query }}>{film.original_title || film.name}</Link></li> ))}
             </ul>
         </div>
     );

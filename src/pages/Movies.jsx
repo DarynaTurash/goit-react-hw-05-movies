@@ -3,42 +3,36 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { SearchQueryList } from "components/searchQueryList";
 import { fetchSearchQueryFilms } from "fetches/fetchSearchQueryFilms";
 import { SearchBox } from "components/SearchBox";
-
+import Notiflix from 'notiflix';
 
 export const Movies = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [foundedFilms, setFoundedFilms] = useState([]);
     const [status, setStatus] = useState('idle');
-    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const queryParam = searchParams.get('movieName');
-    
+    const navigate = useNavigate();
 
     const handleSearch = event => {
         event.preventDefault();
-        fetchFilms().then(films => setFoundedFilms(films));
+        navigate(`/movies?movieName=${encodeURIComponent(searchQuery)}`);
     };
 
-    const fetchFilms = async () => {
+    const fetchFilms = async (query) => {
         try {
             setStatus('pending'); 
-            console.log(status);
 
-            const dataFilms = await fetchSearchQueryFilms(searchQuery);
-            setStatus('resolved');
-            console.log(status);
-            
+            const dataFilms = await fetchSearchQueryFilms(query);
             
             if (dataFilms.length === 0) {
-                alert("Sorry, there are no matches. Please check if the title you wrote is correct.");
+                Notiflix.Notify.warning('Sorry, there are no matches. Please, check if the title you wrote is correct.');
+                setStatus('idle');
                 navigate('/movies');
                 setFoundedFilms([]);
                 setSearchQuery('');
-                return [];
             } else {
                 setStatus('resolved');
-                navigate(`/movies?movieName=${encodeURIComponent(searchQuery)}`);
-                return dataFilms;
+                setFoundedFilms(dataFilms);
             }
         } catch (error) {
             setStatus('rejected');
@@ -46,14 +40,18 @@ export const Movies = () => {
     };
 
     useEffect(() => {
-        setSearchQuery(queryParam || "");
+        if (queryParam) {
+            fetchFilms(queryParam);
+            setSearchQuery(queryParam);
+        }
     }, [queryParam]);
 
     return (
         <main>
             <SearchBox query={searchQuery} onSearch={handleSearch} onChange={setSearchQuery} />
-            {status === "pending" && <p>...Loadind</p>}
-            {status === "resolved" && <SearchQueryList list={foundedFilms} query={searchQuery} />}
+            {status === "pending" && <p>...Loading</p>}
+            {status === "resolved" && <SearchQueryList list={foundedFilms} query={queryParam} />}
+            {status === 'rejected' && <p>Error, something went wrong, please try again</p>}
         </main>
     );
 };
