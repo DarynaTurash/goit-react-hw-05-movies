@@ -51,7 +51,7 @@ const Movies = () => {
         <main>
             <SearchBox query={searchQuery} onSearch={handleSearch} onChange={setSearchQuery} />
             {status === "pending" && <Loader />}
-            {status === "resolved" && <SearchQueryList list={foundedFilms} query={queryParam} />}
+            {status === "resolved" && <SearchQueryList list={foundedFilms} />}
             {status === 'rejected' && <p>Error, something went wrong, please try again</p>}
         </main>
     );
