@@ -1,4 +1,4 @@
-export const ReviewOneAuthor = ({ name, text }) => {
+const ReviewOneAuthor = ({ name, text }) => {
     return (
      <div>
         <h4>Author: {name}</h4>
@@ -6,3 +6,5 @@ export const ReviewOneAuthor = ({ name, text }) => {
      </div>
     );
 };
+
+export default ReviewOneAuthor;

@@ -1,4 +1,4 @@
-export const CastOneActor = ({ name, photo, character }) => {
+const CastOneActor = ({ name, photo, character }) => {
     return (
     <div>
         <img src={`https://image.tmdb.org/t/p/original/${photo}`} alt={name} />
@@ -6,4 +6,6 @@ export const CastOneActor = ({ name, photo, character }) => {
         <p>Character: {character}</p>
     </div>
     );
-}
+};
+
+export default CastOneActor;

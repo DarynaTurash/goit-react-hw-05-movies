@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { SearchQueryList } from "components/searchQueryList";
-import { fetchSearchQueryFilms } from "fetches/fetchSearchQueryFilms";
-import { SearchBox } from "components/SearchBox";
+import SearchQueryList from "components/SearchQueryList";
+import fetchSearchQueryFilms from "fetches/fetchSearchQueryFilms";
+import SearchBox from "components/SearchBox";
 import Notiflix from 'notiflix';
+import Loader from "components/Loader";
 
-export const Movies = () => {
+const Movies = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [foundedFilms, setFoundedFilms] = useState([]);
     const [status, setStatus] = useState('idle');
@@ -18,40 +19,42 @@ export const Movies = () => {
         navigate(`/movies?movieName=${encodeURIComponent(searchQuery)}`);
     };
 
-    const fetchFilms = async (query) => {
-        try {
-            setStatus('pending'); 
-
-            const dataFilms = await fetchSearchQueryFilms(query);
-            
-            if (dataFilms.length === 0) {
-                Notiflix.Notify.warning('Sorry, there are no matches. Please, check if the title you wrote is correct.');
-                setStatus('idle');
-                navigate('/movies');
-                setFoundedFilms([]);
-                setSearchQuery('');
-            } else {
-                setStatus('resolved');
-                setFoundedFilms(dataFilms);
-            }
-        } catch (error) {
-            setStatus('rejected');
-        }
-    };
-
     useEffect(() => {
         if (queryParam) {
-            fetchFilms(queryParam);
+            const fetchAndSetFilms = async () => {
+                try {
+                    setStatus('pending'); 
+    
+                    const dataFilms = await fetchSearchQueryFilms(queryParam);
+                    
+                    if (dataFilms.length === 0) {
+                        Notiflix.Notify.warning('Sorry, there are no matches. Please, check if the title you wrote is correct.');
+                        setStatus('idle');
+                        navigate('/movies');
+                        setFoundedFilms([]);
+                        setSearchQuery('');
+                    } else {
+                        setStatus('resolved');
+                        setFoundedFilms(dataFilms);
+                    }
+                } catch (error) {
+                    setStatus('rejected');
+                }
+            };
+    
+            fetchAndSetFilms();
             setSearchQuery(queryParam);
         }
-    }, [queryParam]);
+    }, [queryParam, navigate]);
 
     return (
         <main>
             <SearchBox query={searchQuery} onSearch={handleSearch} onChange={setSearchQuery} />
-            {status === "pending" && <p>...Loading</p>}
+            {status === "pending" && <Loader />}
             {status === "resolved" && <SearchQueryList list={foundedFilms} query={queryParam} />}
             {status === 'rejected' && <p>Error, something went wrong, please try again</p>}
         </main>
     );
 };
+
+export default Movies;

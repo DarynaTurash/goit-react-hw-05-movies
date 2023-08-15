@@ -1,8 +1,9 @@
-import { fetchTrendindFilms } from "../fetches/fetchTrendingFilms";
-import { TrendingFilmsList } from "../components/trendindFilmsList";
-import { useEffect, useState } from "react";
+import fetchTrendindFilms from "../fetches/fetchTrendingFilms";
+import { useEffect, useState, lazy, Suspense } from "react";
+const TrendingFilmsList = lazy(() => import('../components/TrendingFilmsList'));
 
-export const Home = () => {
+
+const Home = () => {
     const [trendingFilms, setTrendingFilms] = useState([]);
 
     const fetchFilms = async () => {
@@ -22,7 +23,12 @@ export const Home = () => {
 
     return (
         <main>
+            <h1>Trending today</h1>
+            <Suspense fallback={<div>Please wait, the movie list is loading</div>}>
             <TrendingFilmsList list={trendingFilms} />
+            </Suspense>
         </main>
     );
 };
+
+export default Home;

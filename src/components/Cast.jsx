@@ -1,10 +1,10 @@
-import { fetchCastDetails } from "fetches/fetchCastDetails";
+import fetchCastDetails from "fetches/fetchCastDetails";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { CastOneActor } from "./CastOneActor";
+import CastOneActor from "./CastOneActor";
 
-export const Cast = () => {
+const Cast = () => {
     const [castDetails, setCastDetails] = useState([]);
     const { movieId } = useParams();
     const location = useLocation();
@@ -38,3 +38,5 @@ export const Cast = () => {
         </div>
     );
 };
+
+export default Cast;

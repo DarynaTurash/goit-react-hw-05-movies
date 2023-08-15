@@ -1,8 +1,8 @@
-import { API_KEY } from "utils/api.key";
+import API_KEY from "utils/api.key";
 import axios from 'axios';
 import { parseISO, getYear } from 'date-fns';
 
-export const fetchMovieDetails = async (movieId) => {
+const fetchMovieDetails = async (movieId) => {
     try {
         const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`);
         const data = response.data;
@@ -30,3 +30,5 @@ export const fetchMovieDetails = async (movieId) => {
         console.log(error);
     }
 };
+
+export default fetchMovieDetails;

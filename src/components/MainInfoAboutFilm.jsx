@@ -1,6 +1,6 @@
-export const MainInfoAboutFilm = ({ poster, title, releaseYear, userScore, overView, genres }) => {
+const MainInfoAboutFilm = ({ poster, title, releaseYear, userScore, overView, genres }) => {
     return (
-        <div>
+        <>
             <div>
                 <img src={`https://image.tmdb.org/t/p/original/${poster}`} alt={title} />
             </div>
@@ -12,6 +12,8 @@ export const MainInfoAboutFilm = ({ poster, title, releaseYear, userScore, overV
                 <h4>Genres</h4>
                 <p>{genres}</p>
             </div>
-        </div>
+        </>
     );
 };
+
+export default MainInfoAboutFilm;

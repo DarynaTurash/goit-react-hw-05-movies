@@ -1,13 +1,15 @@
-import { fetchReviews } from "fetches/fetchReviews";
-import { ReviewOneAuthor } from "../components/ReviewOneAuthor";
+import fetchReviews from "fetches/fetchReviews";
+import ReviewOneAuthor from "../components/ReviewOneAuthor";
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-export const Reviews = () => {
+
+const Reviews = () => {
     const [reviewDetails, setReviewDetails] = useState([]);
     const [noReviews, setNoReviews] = useState(false);
     const { movieId } = useParams();
     const location = useLocation();
+
 
     const fetchAndSetReviewsDetails = async (id) => {
         try {
@@ -39,3 +41,5 @@ export const Reviews = () => {
         </div>
     );
 };
+
+export default Reviews;

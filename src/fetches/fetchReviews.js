@@ -1,7 +1,7 @@
-import { API_KEY } from "utils/api.key";
+import API_KEY from "utils/api.key";
 import axios from 'axios';
 
-export const fetchReviews = async (movieId) => {
+const fetchReviews = async (movieId) => {
     try {
         const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${API_KEY}`);
         const data = response.data;
@@ -17,3 +17,5 @@ export const fetchReviews = async (movieId) => {
         console.log(error);
     }
 };
+
+export default fetchReviews;
