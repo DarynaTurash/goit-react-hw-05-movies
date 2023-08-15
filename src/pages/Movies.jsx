@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import SearchQueryList from "components/SearchQueryList";
+import SearchQueryList from "components/SearchqueryList";
 import fetchSearchQueryFilms from "fetches/fetchSearchQueryFilms";
 import SearchBox from "components/SearchBox";
 import Notiflix from 'notiflix';
