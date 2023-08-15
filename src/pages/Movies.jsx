@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SearchQueryList from "../components/SearchqueryList";
 import fetchSearchQueryFilms from "fetches/fetchSearchQueryFilms";
-import SearchBox from "components/SearchBox";
+import SearchBox from "../components/SearchBox";
 import Notiflix from 'notiflix';
-import Loader from "components/Loader";
+import Loader from "../components/Loader";
 
 const Movies = () => {
     const [searchQuery, setSearchQuery] = useState("");
