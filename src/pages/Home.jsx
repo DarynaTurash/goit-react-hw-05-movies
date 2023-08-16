@@ -23,7 +23,6 @@ const Home = () => {
 
     return (
         <main>
-            <h1>Trending today</h1>
             <Suspense fallback={<div>Please wait, the movie list is loading</div>}>
             <TrendingFilmsList list={trendingFilms} />
             </Suspense>

@@ -2,6 +2,8 @@ import fetchReviews from "fetches/fetchReviews";
 import ReviewOneAuthor from "../components/ReviewOneAuthor";
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { Container, Section } from "../commonStyles/ContainerAndSection";
+import { List }from "../components/Reviews.styled";
 
 
 const Reviews = () => {
@@ -32,13 +34,15 @@ const Reviews = () => {
     }, [movieId, location]);
 
     return (
-        <div>
+        <Section>
+            <Container>
             {noReviews
             ? <p>There are no reviews for this movie yet</p>
-            : <ul>
+            : <List>
                 {reviewDetails.map(review => (<ReviewOneAuthor key={review.id} name={review.author} text={review.text} />))}
-            </ul>}
-        </div>
+            </List>}
+            </Container>
+        </Section>
     );
 };
 

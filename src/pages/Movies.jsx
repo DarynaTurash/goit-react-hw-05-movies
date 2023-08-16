@@ -16,7 +16,13 @@ const Movies = () => {
 
     const handleSearch = event => {
         event.preventDefault();
-        navigate(`/movies?movieName=${encodeURIComponent(searchQuery)}`);
+
+        if(searchQuery === '') {
+            Notiflix.Notify.info("Please, enter something into field");
+            return;
+        } else {
+            navigate(`/movies?movieName=${encodeURIComponent(searchQuery)}`);
+        }   
     };
 
     useEffect(() => {

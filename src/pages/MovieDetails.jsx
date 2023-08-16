@@ -1,10 +1,8 @@
 import fetchMovieDetails from "fetches/fetchMovieDetails";
-import { useState, useEffect, useRef } from "react";
-import { useParams, Outlet, useLocation, Link } from "react-router-dom";
-import MainInfoAboutFilm from "components/MainInfoAboutFilm";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useParams, Outlet, useLocation } from "react-router-dom";
 import AdditionalInfoAboutFilm from "components/AdditionalInfoAboutFilm";
-
-
+import MainInfoAboutFilm from "../components/MainInfoAboutFilm";
 
 const MovieDetails = () => {
     const [movieDetails, setMovieDetails] = useState({});
@@ -12,7 +10,6 @@ const MovieDetails = () => {
     const { movieId } = useParams();
     const location = useLocation();
     const backLinkLocation = useRef(location.state?.from ?? '/');
-    console.log(backLinkLocation);
 
     useEffect(() => {
         fetchMovieDetails(movieId)
@@ -33,18 +30,14 @@ const MovieDetails = () => {
 
     return (
         <main>
-            {caseNoInformation ? <p>Sorry, we did not get any information about this film, try to choose another film, please</p> :
+            {caseNoInformation ? <p>Sorry, we did not get any information about this film, try to choose another film, please</p>
+            :
             <>
-            <section>
-                <Link to={backLinkLocation.current}>Go back</Link>
-                <MainInfoAboutFilm poster={movieDetails.poster} title={movieDetails.title} releaseYear={movieDetails.releaseYear} userScore={movieDetails.userScore} overView={movieDetails.overView} genres={movieDetails.genres} />    
-            </section>
-            <section>
-                <AdditionalInfoAboutFilm />
-            </section>
-            <section>
-                <Outlet />
-            </section>
+            <MainInfoAboutFilm backLink={backLinkLocation.current} poster={movieDetails.poster} title={movieDetails.title} releaseYear={movieDetails.releaseYear} userScore={movieDetails.userScore} overView={movieDetails.overView} genres={movieDetails.genres} />    
+            <AdditionalInfoAboutFilm />
+            <Suspense fallback={<div>...Loadind</div>}>
+            <Outlet />
+            </Suspense>
             </>}
         </main>
     );

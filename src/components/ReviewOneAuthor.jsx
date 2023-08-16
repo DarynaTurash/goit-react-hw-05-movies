@@ -1,10 +1,18 @@
+import { Title } from '../components/ReviewOneAuthor.styled';
+import PropTypes from 'prop-types';
+
 const ReviewOneAuthor = ({ name, text }) => {
     return (
      <div>
-        <h4>Author: {name}</h4>
+        <Title>Author: {name}</Title>
         <p>{text}</p>
      </div>
     );
+};
+
+ReviewOneAuthor.propTypes = {
+    name: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
 };
 
 export default ReviewOneAuthor;

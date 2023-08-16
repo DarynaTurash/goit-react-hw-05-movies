@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import CastOneActor from "./CastOneActor";
+import { Container, Section } from "../commonStyles/ContainerAndSection";
+import { List } from "../components/Cast.styled";
 
 const Cast = () => {
     const [castDetails, setCastDetails] = useState([]);
@@ -24,8 +26,9 @@ const Cast = () => {
     }, [movieId, location]);
 
     return (
-        <div>
-            <ul>
+        <Section>
+            <Container>
+            <List>
                 {castDetails.map(oneActor => (
                     <CastOneActor
                         key={oneActor.name}
@@ -34,8 +37,9 @@ const Cast = () => {
                         character={oneActor.character}
                     />
                 ))}
-            </ul>
-        </div>
+            </List>
+            </Container>
+        </Section>
     );
 };
 
