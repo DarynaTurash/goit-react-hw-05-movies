@@ -5,6 +5,7 @@ import fetchSearchQueryFilms from "fetches/fetchSearchQueryFilms";
 import SearchBox from "../components/SearchBox";
 import Notiflix from 'notiflix';
 import Loader from "../components/Loader";
+import Error404 from "components/NoInformation";
 
 const Movies = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -58,7 +59,7 @@ const Movies = () => {
             <SearchBox query={searchQuery} onSearch={handleSearch} onChange={setSearchQuery} />
             {status === "pending" && <Loader />}
             {status === "resolved" && <SearchQueryList list={foundedFilms} />}
-            {status === 'rejected' && <p>Error, something went wrong, please try again</p>}
+            {status === 'rejected' && <Error404 />}
         </main>
     );
 };

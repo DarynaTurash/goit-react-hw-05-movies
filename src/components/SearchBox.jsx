@@ -6,7 +6,7 @@ const SearchBox = ({ query, onSearch, onChange }) => {
     return (
         <Section>
             <Container>
-                <Form>
+                <Form onSubmit={onSearch}>
                     <Input
                         type="text"
                         value={query}
@@ -14,10 +14,7 @@ const SearchBox = ({ query, onSearch, onChange }) => {
                         autoFocus
                         placeholder="Enter the title of the movie..."
                     />
-                    <ButtonLink
-                        to={`/movies?movieName=${query}`}
-                        onClick={onSearch}
-                    >
+                    <ButtonLink to={`/movies?movieName=${query}`}>
                         Search
                     </ButtonLink>
                 </Form>

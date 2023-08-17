@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import { useParams, Outlet, useLocation } from "react-router-dom";
 import AdditionalInfoAboutFilm from "components/AdditionalInfoAboutFilm";
 import MainInfoAboutFilm from "../components/MainInfoAboutFilm";
+import NoInformation from "../components/NoInformation";
 
 const MovieDetails = () => {
     const [movieDetails, setMovieDetails] = useState({});
@@ -30,7 +31,7 @@ const MovieDetails = () => {
 
     return (
         <main>
-            {caseNoInformation ? <p>Sorry, we did not get any information about this film, try to choose another film, please</p>
+            {caseNoInformation ? <NoInformation />
             :
             <>
             <MainInfoAboutFilm backLink={backLinkLocation.current} poster={movieDetails.poster} title={movieDetails.title} releaseYear={movieDetails.releaseYear} userScore={movieDetails.userScore} overView={movieDetails.overView} genres={movieDetails.genres} />    
